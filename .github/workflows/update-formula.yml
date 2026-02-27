@@ -1,0 +1,94 @@
+name: Update Formula
+
+on:
+  repository_dispatch:
+    types: [release]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download checksums
+        run: |
+          VERSION=${{ github.event.client_payload.version }}
+          TAG=${{ github.event.client_payload.tag }}
+          curl -sL "https://github.com/elvisnm/wt/releases/download/${TAG}/checksums.txt" -o checksums.txt
+          cat checksums.txt
+
+      - name: Update formula
+        run: |
+          VERSION=${{ github.event.client_payload.version }}
+          TAG=${{ github.event.client_payload.tag }}
+
+          # Extract checksums
+          SHA_DARWIN_ARM64=$(grep "darwin_arm64" checksums.txt | awk '{print $1}')
+          SHA_DARWIN_AMD64=$(grep "darwin_amd64" checksums.txt | awk '{print $1}')
+          SHA_LINUX_AMD64=$(grep "linux_amd64" checksums.txt | awk '{print $1}')
+
+          # Generate formula from template
+          cat > Formula/wt.rb << 'RUBY'
+          class Wt < Formula
+            desc "Config-driven Docker worktree management toolkit"
+            homepage "https://github.com/elvisnm/wt"
+            license "MIT"
+          RUBY
+
+          cat >> Formula/wt.rb << RUBY
+            version "${VERSION}"
+
+            on_macos do
+              on_arm do
+                url "https://github.com/elvisnm/wt/releases/download/${TAG}/wt_${VERSION}_darwin_arm64.tar.gz"
+                sha256 "${SHA_DARWIN_ARM64}"
+              end
+              on_intel do
+                url "https://github.com/elvisnm/wt/releases/download/${TAG}/wt_${VERSION}_darwin_amd64.tar.gz"
+                sha256 "${SHA_DARWIN_AMD64}"
+              end
+            end
+
+            on_linux do
+              on_intel do
+                url "https://github.com/elvisnm/wt/releases/download/${TAG}/wt_${VERSION}_linux_amd64.tar.gz"
+                sha256 "${SHA_LINUX_AMD64}"
+              end
+            end
+
+            depends_on "node"
+
+            def install
+              bin.install "bin/wt"
+              pkgshare.install "share/wt/worktree-flow"
+            end
+
+            def caveats
+              <<~EOS
+                Scripts installed to: #{pkgshare}/worktree-flow
+                The wt binary finds them automatically.
+
+                To get started in a new project:
+                  cd your-project
+                  wt init
+              EOS
+            end
+
+            test do
+              assert_match version.to_s, shell_output("#{bin}/wt version")
+            end
+          end
+          RUBY
+
+          # Fix indentation (remove leading spaces from heredoc)
+          sed -i 's/^          //' Formula/wt.rb
+
+      - name: Commit and push
+        run: |
+          VERSION=${{ github.event.client_payload.version }}
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Formula/wt.rb
+          git commit -m "Update wt to ${VERSION}"
+          git push
