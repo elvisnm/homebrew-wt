@@ -2,23 +2,23 @@ class Wt < Formula
   desc "Config-driven Docker worktree management toolkit"
   homepage "https://github.com/elvisnm/wt"
   license "MIT"
-  version "1.15.0"
+  version "1.16.0"
 
   on_macos do
     on_arm do
-      url "https://github.com/elvisnm/wt/releases/download/v1.15.0/wt_1.15.0_darwin_arm64.tar.gz"
-      sha256 "6a6a5c8878d8d05308291d63132d0e3afb3a15581548bf0ac7aadb9ff8cf3c5b"
+      url "https://github.com/elvisnm/wt/releases/download/v1.16.0/wt_1.16.0_darwin_arm64.tar.gz"
+      sha256 "a64df127e136fec2412987450dded43e879d9d61189dde60c36eaee0a4cf6e3e"
     end
     on_intel do
-      url "https://github.com/elvisnm/wt/releases/download/v1.15.0/wt_1.15.0_darwin_amd64.tar.gz"
-      sha256 "2c78d9945f81c79eb88a17e8d0defdf21a2328fdff0698c59f71af714212f102"
+      url "https://github.com/elvisnm/wt/releases/download/v1.16.0/wt_1.16.0_darwin_amd64.tar.gz"
+      sha256 "1ddbd32db3c2c94e0dea136fff80643b4f139fdf3cf6e3657fdd114062fff70a"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/elvisnm/wt/releases/download/v1.15.0/wt_1.15.0_linux_amd64.tar.gz"
-      sha256 "5281c023e80d5cf8579f98228f926379b1f985f2a67ae9fa2e6f5200861d7ff1"
+      url "https://github.com/elvisnm/wt/releases/download/v1.16.0/wt_1.16.0_linux_amd64.tar.gz"
+      sha256 "96a96e48b3e91ba061faafe9391db04baef1f788d5345ffdf4bf2862c58aa5fe"
     end
   end
 
