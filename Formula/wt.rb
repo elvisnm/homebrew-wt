@@ -2,23 +2,23 @@ class Wt < Formula
   desc "Config-driven worktree management toolkit"
   homepage "https://github.com/elvisnm/wt"
   license "MIT"
-  version "4.0.0"
+  version "1.0.0"
 
   on_macos do
     on_arm do
-      url "https://github.com/elvisnm/wt/releases/download/v4.0.0/wt_4.0.0_darwin_arm64.tar.gz"
-      sha256 "beb1ac78d1ed715778e58db7f65ed552bb3fb420023324077a7575023861e36f"
+      url "https://github.com/elvisnm/wt/releases/download/v1.0.0/wt_1.0.0_darwin_arm64.tar.gz"
+      sha256 "d33fd9cac9276803132d92ed46c1fd866d2b4409d73d71c49d181bc368c01cc8"
     end
     on_intel do
-      url "https://github.com/elvisnm/wt/releases/download/v4.0.0/wt_4.0.0_darwin_amd64.tar.gz"
-      sha256 "83a27a4fc29b538b665af5967d5daf70e6da54c590e768a62b6361d113aca4f6"
+      url "https://github.com/elvisnm/wt/releases/download/v1.0.0/wt_1.0.0_darwin_amd64.tar.gz"
+      sha256 "6d89fcc5895e8df044d645ff78d4e24d2e0acd0f41e42d9ad383b5db0e188e54"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/elvisnm/wt/releases/download/v4.0.0/wt_4.0.0_linux_amd64.tar.gz"
-      sha256 "669ea135fe416f37c6f384ab2612a57479929ad327265447ac2dc8c2051a6c02"
+      url "https://github.com/elvisnm/wt/releases/download/v1.0.0/wt_1.0.0_linux_amd64.tar.gz"
+      sha256 "12a6375e318d03e74c66c57494d82d2d42643b4dcb77159e3d47d68571bcfdd1"
     end
   end
 
@@ -36,7 +36,7 @@ class Wt < Formula
 
       To get started in a new project:
         cd your-project
-        wt init
+        wt
     EOS
   end
 
